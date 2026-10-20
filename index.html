@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffe7f0">
+  <title>Gửi Dun ni 💌</title>
+  <style>
+    :root {
+      --pink: #ffd7e6;
+      --pink-deep: #ee8fb2;
+      --rose: #c65d87;
+      --cream: #fffafc;
+      --ink: #74485a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100svh; overflow-x: hidden;
+      display: grid; place-items: center; padding: 24px 14px;
+      font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 15% 15%, #fff 0 3px, transparent 4px),
+                  linear-gradient(145deg, #fff3f8, #ffe1ed 52%, #fff6fa);
+    }
+    .sparkle { position: fixed; pointer-events: none; opacity: .65; animation: float 5s ease-in-out infinite; }
+    .s1 { top: 9%; left: 10%; font-size: 25px; }
+    .s2 { top: 18%; right: 11%; font-size: 20px; animation-delay: 1s; }
+    .s3 { bottom: 13%; left: 12%; font-size: 22px; animation-delay: 2s; }
+    .s4 { bottom: 9%; right: 13%; font-size: 27px; animation-delay: .5s; }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
+    .wrap { width: min(100%, 440px); text-align: center; position: relative; z-index: 1; }
+    .eyebrow { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: #bd7895; margin: 0 0 8px; }
+    h1 { font-size: clamp(1.7rem, 7vw, 2.25rem); margin: 0 0 8px; color: #b64e7b; }
+    .intro { margin: 0 0 28px; line-height: 1.6; color: #98677c; }
+    .scene { height: 260px; display: grid; place-items: center; perspective: 1000px; margin: 0 auto 18px; }
+    .envelope { width: min(84vw, 330px); height: 205px; position: relative; cursor: pointer; border: 0; background: transparent; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .env-back { position: absolute; inset: 0; background: #f7b7ce; border-radius: 12px; box-shadow: 0 18px 35px #d98aa744; }
+    .letter {
+      position: absolute; z-index: 2; left: 7%; width: 86%; bottom: 8px; height: 175px;
+      padding: 20px 16px; background: var(--cream); border-radius: 9px;
+      box-shadow: 0 4px 14px #b95f8422; display: flex; flex-direction: column; justify-content: center;
+      transition: transform 900ms cubic-bezier(.2,.75,.2,1), height 900ms, bottom 900ms;
+    }
+    .letter .mini-heart { font-size: 27px; margin-bottom: 8px; }
+    .letter p { margin: 0; font-size: .95rem; line-height: 1.55; }
+    .front { position: absolute; z-index: 3; inset: 0; border-radius: 12px; overflow: hidden; }
+    .front-left { position: absolute; inset: 0; background: #f6abc6; clip-path: polygon(0 0, 51% 54%, 0 100%); }
+    .front-right { position: absolute; inset: 0; background: #f8bfd4; clip-path: polygon(100% 0, 49% 54%, 100% 100%); }
+    .front-bottom { position: absolute; inset: 0; background: #f4a2c0; clip-path: polygon(0 100%, 50% 45%, 100% 100%); }
+    .flap { position: absolute; z-index: 4; inset: 0; background: #f9c7da; clip-path: polygon(0 0, 100% 0, 50% 60%); transform-origin: top center; transition: transform 700ms ease; filter: drop-shadow(0 3px 2px #c76f9230); }
+    .seal { position: absolute; z-index: 5; left: 50%; top: 53%; transform: translate(-50%,-50%); width: 43px; height: 43px; border-radius: 50%; display: grid; place-items: center; color: white; font-size: 22px; background: #e67da7; box-shadow: 0 3px 8px #b85d8033; transition: opacity .3s, transform .3s; }
+    .envelope.open .flap { transform: rotateX(180deg); }
+    .envelope.open .seal { opacity: 0; transform: translate(-50%,-50%) scale(.6); }
+    .envelope.open .letter { transform: translateY(-118px); height: 220px; }
+    .envelope.open .front { overflow: visible; }
+    .hint { color: #b16b8a; font-size: .9rem; margin: 0 0 17px; }
+    .message-card { background: #ffffffd9; border: 1px solid #f8c9dc; border-radius: 22px; padding: 22px 20px; box-shadow: 0 12px 35px #c96d9120; opacity: 0; transform: translateY(12px); max-height: 0; overflow: hidden; transition: opacity .6s, transform .6s, max-height .8s, padding .4s; }
+    .message-card.show { opacity: 1; transform: translateY(0); max-height: 420px; }
+    .message-card h2 { margin: 0 0 12px; color: #c15c86; font-size: 1.35rem; }
+    .message-card p { margin: 0; line-height: 1.8; font-size: 1rem; white-space: pre-line; }
+    .sign { margin-top: 18px !important; color: #b14e79; font-weight: 700; }
+    .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    .btn { border: 0; border-radius: 999px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+    .btn:active { transform: scale(.97); }
+    .primary { color: white; background: #d96e9a; box-shadow: 0 6px 14px #d96e9a44; }
+    .secondary { color: #b14e79; background: #fff; border: 1px solid #f1bfd2; }
+    .footer { margin-top: 22px; color: #bd8ba0; font-size: .75rem; }
+    .heart { position: fixed; z-index: 10; bottom: -30px; pointer-events: none; animation: rise 3.4s ease-in forwards; }
+    @keyframes rise { 0% { transform: translateY(0) rotate(0) scale(.7); opacity: 0; } 15% { opacity: .95; } 100% { transform: translateY(-110svh) rotate(30deg) scale(1.2); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <span class="sparkle s1" aria-hidden="true">✦</span>
+  <span class="sparkle s2" aria-hidden="true">♡</span>
+  <span class="sparkle s3" aria-hidden="true">✧</span>
+  <span class="sparkle s4" aria-hidden="true">♡</span>
+
+  <main class="wrap">
+    <p class="eyebrow">a little note for you</p>
+    <h1>Gửi Dun ni 💗</h1>
+    <p class="intro">Có một chiếc thư nhỏ xíu dành riêng cho cậu nè!</p>
+
+    <div class="scene">
+      <button class="envelope" id="envelope" aria-label="Mở phong bì để đọc thư" aria-expanded="false">
+        <span class="env-back"></span>
+        <span class="letter" aria-hidden="true"><span class="mini-heart">💌</span><p>Một chút lời thương<br>gửi đến cậu...</p></span>
+        <span class="front"><span class="front-left"></span><span class="front-right"></span><span class="front-bottom"></span></span>
+        <span class="flap"></span>
+        <span class="seal">♥</span>
+      </button>
+    </div>
+    <p class="hint" id="hint">Chạm vào phong bì để mở thư nha ✨</p>
+
+    <section class="message-card" id="message" aria-live="polite" aria-hidden="true">
+      <h2>Gửi Dun ni thân mến 🌷</h2>
+      <p>Cảm ơn vì đã xuất hiện trong cuộc sống của tớ. Mong rằng chúng ta sẽ có thật nhiều kỷ niệm đẹp cùng nhau!</p>
+      <p class="sign">— bạn cùng bàn ♡</p>
+      <div class="actions">
+        <button class="btn primary" id="heartsBtn">Thả tim nè 💕</button>
+        <button class="btn secondary" id="againBtn">Đọc lại thư ↻</button>
+      </div>
+    </section>
+    <p class="footer">được làm bằng một chút yêu thương ♡</p>
+  </main>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const message = document.getElementById('message');
+    const hint = document.getElementById('hint');
+    const heartsBtn = document.getElementById('heartsBtn');
+    const againBtn = document.getElementById('againBtn');
+    let opened = false;
+
+    function floatHearts(count = 12) {
+      const symbols = ['💗', '💕', '♡', '💖', '🌸'];
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'heart';
+        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.left = (5 + Math.random() * 90) + 'vw';
+        heart.style.fontSize = (16 + Math.random() * 19) + 'px';
+        heart.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+        heart.style.animationDelay = (Math.random() * .6) + 's';
+        document.body.appendChild(heart);
+        heart.addEventListener('animationend', () => heart.remove());
+      }
+    }
+
+    envelope.addEventListener('click', () => {
+      if (opened) return;
+      opened = true;
+      envelope.classList.add('open');
+      envelope.setAttribute('aria-expanded', 'true');
+      hint.textContent = 'Thư dành riêng cho cậu đây rồi 💌';
+      window.setTimeout(() => {
+        message.classList.add('show');
+        message.setAttribute('aria-hidden', 'false');
+        floatHearts(10);
+      }, 650);
+    });
+
+    heartsBtn.addEventListener('click', () => floatHearts(22));
+    againBtn.addEventListener('click', () => {
+      opened = false;
+      envelope.classList.remove('open');
+      envelope.setAttribute('aria-expanded', 'false');
+      message.classList.remove('show');
+      message.setAttribute('aria-hidden', 'true');
+      hint.textContent = 'Chạm vào phong bì để mở thư nha ✨';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
